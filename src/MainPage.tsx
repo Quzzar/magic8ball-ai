@@ -83,7 +83,7 @@ export default function MainPage() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: 'calc(100vh - 80px)',
+            height: 'calc(100vh - 50px)',
           }}
         >
           <Title
@@ -91,6 +91,7 @@ export default function MainPage() {
             color='#fff'
             ta="center"
             w={120}
+            h={120}
           >{result}</Title>
         </Box>
         <Box
