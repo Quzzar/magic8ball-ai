@@ -1,3 +1,3 @@
-# MsgBack
+# Magic 8 Ball - AI
 
-Perform analysis and come up with interesting replies using AI to maintain an engaging conversation.
+Ask questions and get answers from AI through the Magic 8 Ball.
