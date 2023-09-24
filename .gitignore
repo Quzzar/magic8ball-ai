@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+public/magic_8_ball_result.png
+public/magic_8_ball.png
