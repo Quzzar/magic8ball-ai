@@ -127,6 +127,7 @@ export default function MainPage() {
               h={"110pt"}
               sx={{
                 fontFamily: "Grandiflora One, serif",
+                userSelect: 'none',
               }}
             >
               {result}
