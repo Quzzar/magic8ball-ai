@@ -129,7 +129,7 @@ export async function askQuestion(question: string){
     13 - My sources say no
     14 - Outlook not so good
     15 - Very doubtful
-    16 - No answer / not applicable
+    16 - No answer / not applicable / not a yes or no question
   `);
 
   return getAnswer(parseInt(response));
