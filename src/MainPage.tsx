@@ -35,6 +35,7 @@ export default function MainPage() {
     if (value.trim() === "") return;
     if (state !== "QUESTION") return;
 
+    ref.current?.blur();
     setState("LOADING");
 
     // Start vibration in pattern of animation blur
