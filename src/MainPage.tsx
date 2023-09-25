@@ -14,16 +14,35 @@ export default function MainPage() {
 
   const shakeRef = useRef<Shake>();
   useEffect(() => {
-    const shake = new Shake({ threshold: 1, timeout: 1000 });
+    const shake = new Shake({ threshold: 15, timeout: 1000 });
 
-    shake.addEventListener("shake", (ev) => {
-      alert("Shake!" + ev.detail.timeStamp + "" + ev.detail.acceleration);
+    shake.addEventListener("shake", () => {
+      alert("I'm Shook!");
+      ask();
     });
 
     shake.start();
 
     shakeRef.current = shake;
   }, []);
+
+  const ask = async () => {
+    if (value.trim() === "") return;
+
+    setState("LOADING");
+
+    // Start vibration in pattern of animation blur
+    window.navigator?.vibrate([1500, 1500, 1500]);
+
+    const answer = await askQuestion(value);
+    await waitDelay(1000);
+
+    // Turn off vibration
+    window.navigator?.vibrate(0);
+
+    setResult(answer);
+    setState("ANSWER");
+  };
 
   return (
     <>
@@ -71,29 +90,7 @@ export default function MainPage() {
                 color="dark"
                 radius="md"
                 size="xl"
-                onClick={async () => {
-                  if (value.trim() === "") return;
-
-                  setState("LOADING");
-
-                  try {
-                    window.navigator.vibrate([1500, 1500, 1500]);
-                  } catch (e) {
-                    /**/
-                  }
-
-                  const answer = await askQuestion(value);
-                  await waitDelay(1000);
-
-                  try {
-                    window.navigator.vibrate(0);
-                  } catch (e) {
-                    /**/
-                  }
-
-                  setResult(answer);
-                  setState("ANSWER");
-                }}
+                onClick={ask}
                 sx={(theme) => ({
                   backdropFilter: "blur(4px)",
                   color: theme.colors.gray[1],
