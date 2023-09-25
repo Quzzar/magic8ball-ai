@@ -13,6 +13,10 @@ import { resultState } from "./atoms/resultAtoms";
 export default function App() {
   const state = useRecoilValue(resultState);
 
+  // Preload background images
+  (new Image()).src = Background;
+  (new Image()).src = BackgroundResult;
+
   return (
     <ColorSchemeProvider colorScheme={"dark"} toggleColorScheme={() => {}}>
       <MantineProvider
