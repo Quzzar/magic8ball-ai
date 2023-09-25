@@ -1,6 +1,6 @@
 import { Box, Button, Center, Stack, Textarea, Title } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
-import { askQuestion, waitDelay } from "./gen-utils";
+import { askQuestion } from "./gen-utils";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { resultState } from "./atoms/resultAtoms";
