@@ -12,7 +12,7 @@ export default function MainPage() {
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
 
-  const [shake] = useState<Shake>(new Shake({ threshold: 15, timeout: 1000 }));
+  const [shake] = useState<Shake>(new Shake({ threshold: 20, timeout: 1000 }));
   const shakeCallbackRef = useRef<() => Promise<void>>();
   useEffect(() => {
     if(shake) {
