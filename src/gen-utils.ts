@@ -105,9 +105,9 @@ export async function askQuestion(question: string){
   `, "gpt-3.5-turbo");
 
   const response = await getAICompletion(`
-    ## Using the following question and story, choose the best number option which summaries what happened. If none of the options are fitting, choose 16.
+    ## Using the following question and story, choose the best number option which summaries what happened.
 
-    ### Question:
+    ### Question (if not yes or no, respond with "Not yes or no"):
     ${question}
 
     ### Story:
@@ -125,11 +125,10 @@ export async function askQuestion(question: string){
     9 - Yes
     10 - Signs point to yes
     11 - Don't count on it
-    12 - My reply is no
+    12 - Not at all
     13 - My sources say no
     14 - Outlook not so good
     15 - Very doubtful
-    16 - No answer / not applicable / not a yes or no question
   `);
 
   return getAnswer(parseInt(response));
