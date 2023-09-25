@@ -12,7 +12,7 @@ export default function MainPage() {
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
 
-  const [shake] = useState<Shake>(new Shake({ threshold: 20, timeout: 1000 }));
+  const [shake] = useState<Shake>(new Shake({ threshold: 25, timeout: 1000 }));
   const shakeCallbackRef = useRef<() => Promise<void>>();
   useEffect(() => {
     if(shake) {
@@ -33,6 +33,7 @@ export default function MainPage() {
 
   const ask = async (value: string) => {
     if (value.trim() === "") return;
+    if (state !== "QUESTION") return;
 
     setState("LOADING");
 
