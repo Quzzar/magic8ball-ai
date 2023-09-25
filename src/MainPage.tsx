@@ -37,7 +37,7 @@ export default function MainPage() {
     setState("LOADING");
 
     // Start vibration in pattern of animation blur
-    window.navigator?.vibrate([1500, 1500, 1500]);
+    window.navigator?.vibrate([1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]);
 
     const answer = await askQuestion(value);
     await waitDelay(1000);
