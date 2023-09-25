@@ -83,15 +83,15 @@ export default function MainPage() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: 'calc(100vh - 50px)',
+            height: '100vh',
           }}
         >
           <Title
-            order={3}
+            fz='12pt'
             color='#fff'
             ta="center"
-            w={120}
-            h={120}
+            w={'70pt'}
+            h={'100pt'}
           >{result}</Title>
         </Box>
         <Box

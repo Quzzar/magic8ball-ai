@@ -10,7 +10,7 @@ import BackgroundResult from "../public/magic_8_ball_result.png";
 import { useRecoilValue } from "recoil";
 import { resultState } from "./atoms/resultAtoms";
 
-function App() {
+export default function App() {
   const state = useRecoilValue(resultState);
 
   return (
@@ -63,5 +63,3 @@ function App() {
     </ColorSchemeProvider>
   );
 }
-
-export default App;
