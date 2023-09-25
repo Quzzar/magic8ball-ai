@@ -12,18 +12,12 @@ export default function MainPage() {
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
 
-  const shakeRef = useRef<Shake>();
   useEffect(() => {
+    // Handle shake-to-ask flow
     const shake = new Shake({ threshold: 15, timeout: 1000 });
-
-    shake.addEventListener("shake", () => {
-      alert("I'm Shook!");
-      ask();
-    });
-
+    shake.addEventListener("shake", ask);
+    // Ask for permission to use vibration
     shake.start();
-
-    shakeRef.current = shake;
   }, []);
 
   const ask = async () => {
