@@ -1,7 +1,7 @@
 import { Box, Button, Center, Stack, Textarea, Title } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { askQuestion, waitDelay } from "./gen-utils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { resultState } from "./atoms/resultAtoms";
 import { Shake } from "./shake";
@@ -12,15 +12,26 @@ export default function MainPage() {
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
 
+  const [shake] = useState<Shake>(new Shake({ threshold: 15, timeout: 1000 }));
+  const shakeCallbackRef = useRef<() => Promise<void>>();
   useEffect(() => {
-    // Handle shake-to-ask flow
-    const shake = new Shake({ threshold: 15, timeout: 1000 });
-    shake.addEventListener("shake", ask);
-    // Ask for permission to use vibration
-    shake.start();
-  }, []);
+    if(shake) {
+      if(shakeCallbackRef.current) {
+        shake.removeEventListener("shake", shakeCallbackRef.current);
+      }
+      shakeCallbackRef.current = () => ask(value);
+      shake.addEventListener("shake", shakeCallbackRef.current);
 
-  const ask = async () => {
+      // Ask for permission to use vibration
+      // TODO: This might ask for permission every time the value changes
+      shake.start();
+    }
+    return () => {
+      if(shake) shake.stop();
+    }
+  }, [shake, value]);
+
+  const ask = async (value: string) => {
     if (value.trim() === "") return;
 
     setState("LOADING");
@@ -84,7 +95,7 @@ export default function MainPage() {
                 color="dark"
                 radius="md"
                 size="xl"
-                onClick={ask}
+                onClick={() => ask(value)}
                 sx={(theme) => ({
                   backdropFilter: "blur(4px)",
                   color: theme.colors.gray[1],
