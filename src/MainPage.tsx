@@ -1,9 +1,10 @@
 import { Box, Button, Center, Stack, Textarea, Title } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { askQuestion, waitDelay } from "./gen-utils";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { resultState } from "./atoms/resultAtoms";
+import { Shake } from "./shake";
 
 export default function MainPage() {
   const [state, setState] = useRecoilState(resultState);
@@ -11,9 +12,22 @@ export default function MainPage() {
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
 
+  const shakeRef = useRef<Shake>();
+  useEffect(() => {
+    const shake = new Shake({ threshold: 1, timeout: 1000 });
+
+    shake.addEventListener("shake", (ev) => {
+      alert("Shake!" + ev.detail.timeStamp + "" + ev.detail.acceleration);
+    });
+
+    shake.start();
+
+    shakeRef.current = shake;
+  }, []);
+
   return (
     <>
-      {state === "QUESTION" || state === 'LOADING' ? (
+      {state === "QUESTION" || state === "LOADING" ? (
         <Box
           sx={{
             position: "absolute",
@@ -59,9 +73,24 @@ export default function MainPage() {
                 size="xl"
                 onClick={async () => {
                   if (value.trim() === "") return;
+
                   setState("LOADING");
+
+                  try {
+                    window.navigator.vibrate([1500, 1500, 1500]);
+                  } catch (e) {
+                    /**/
+                  }
+
                   const answer = await askQuestion(value);
                   await waitDelay(1000);
+
+                  try {
+                    window.navigator.vibrate(0);
+                  } catch (e) {
+                    /**/
+                  }
+
                   setResult(answer);
                   setState("ANSWER");
                 }}
@@ -78,51 +107,57 @@ export default function MainPage() {
         </Box>
       ) : (
         <>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100vh',
-          }}
-        >
-          <Title
-            fz='12pt'
-            color='#fff'
-            ta="center"
-            w={'70pt'}
-            h={'100pt'}
-          >{result}</Title>
-        </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            left: `calc(50% - ${75}px)`,
-            top: "85%",
-          }}
-        >
-          <Stack spacing={10}>
-            <Center>
-              <Button
-                variant="light"
-                color="dark"
-                radius="md"
-                size="xl"
-                onClick={async () => {
-                  setValue("");
-                  setState("QUESTION");
-                }}
-                sx={(theme) => ({
-                  backdropFilter: "blur(4px)",
-                  color: theme.colors.gray[1],
-                })}
-                compact
-              >
-                Ask again
-              </Button>
-            </Center>
-          </Stack>
-        </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <Title
+              fz="16pt"
+              color="#fff"
+              ta="center"
+              lineClamp={4}
+              w={"100pt"}
+              h={"110pt"}
+              sx={{
+                fontFamily: "Grandiflora One, serif",
+              }}
+            >
+              {result}
+            </Title>
+          </Box>
+          <Box
+            sx={{
+              position: "absolute",
+              left: `calc(50% - ${75}px)`,
+              top: "85%",
+            }}
+          >
+            <Stack spacing={10}>
+              <Center>
+                <Button
+                  variant="light"
+                  color="dark"
+                  radius="md"
+                  size="xl"
+                  onClick={async () => {
+                    setValue("");
+                    setState("QUESTION");
+                  }}
+                  sx={(theme) => ({
+                    backdropFilter: "blur(4px)",
+                    color: theme.colors.gray[1],
+                  })}
+                  compact
+                >
+                  Ask again
+                </Button>
+              </Center>
+            </Stack>
+          </Box>
         </>
       )}
     </>
