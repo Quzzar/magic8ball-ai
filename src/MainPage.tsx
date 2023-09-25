@@ -40,7 +40,7 @@ export default function MainPage() {
     window.navigator?.vibrate([1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]);
 
     const answer = await askQuestion(value);
-    await waitDelay(1000);
+    //await waitDelay(1000);
 
     // Turn off vibration
     window.navigator?.vibrate(0);
