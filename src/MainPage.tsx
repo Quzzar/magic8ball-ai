@@ -40,7 +40,6 @@ export default function MainPage() {
     window.navigator?.vibrate([1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]);
 
     const answer = await askQuestion(value);
-    //await waitDelay(1000);
 
     // Turn off vibration
     window.navigator?.vibrate(0);
@@ -122,7 +121,7 @@ export default function MainPage() {
               color="#fff"
               ta="center"
               lineClamp={4}
-              w={"100pt"}
+              w={"90pt"}
               h={"110pt"}
               sx={{
                 fontFamily: "Grandiflora One, serif",

@@ -105,7 +105,7 @@ export async function askQuestion(question: string){
   `, "gpt-3.5-turbo");
 
   const response = await getAICompletion(`
-    ## Using the following question and story, choose the best number option which summaries what happened.
+    ## Using the following question and story, choose the best number option which summaries what happened. If none of the options are fitting, choose 16.
 
     ### Question:
     ${question}
@@ -129,6 +129,7 @@ export async function askQuestion(question: string){
     13 - My sources say no
     14 - Outlook not so good
     15 - Very doubtful
+    16 - No answer / not applicable
   `);
 
   return getAnswer(parseInt(response));
